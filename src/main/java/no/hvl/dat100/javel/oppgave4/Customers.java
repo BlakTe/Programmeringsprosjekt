@@ -6,63 +6,65 @@ public class Customers {
 
     private Customer[] customers;
 
-    // a) Complete constructor
+    // a) Konstruktør
     public Customers(int size) {
-
-        // TODO
-
+        customers = new Customer[size];
     }
 
-    // b) count number of non-null references
+    // b) Telle antall kunder som ikke er null
     public int countNonNull() {
-
-
         int count = 0;
-
-        // TODO
-
+        for (Customer c : customers) {
+            if (c != null) {
+                count++;
+            }
+        }
         return count;
     }
 
-    // c) return reference to customer with given id (if exists)
+    // c) Hente kunde etter customer_id
     public Customer getCustomer(int customer_id) {
-
-        boolean funnet = false;
-        Customer c = null;
-
-        // TODO
-
-        return c;
+        for (Customer c : customers) {
+            if (c != null && c.getCustomer_id() == customer_id) {
+                return c;
+            }
+        }
+        return null;
     }
 
-    // d) add a customer to the reference table
+    // d) Sette inn kunde på første ledige plass
     public boolean addCustomer(Customer c) {
-
-        boolean inserted = false;
-
-        // TODO
-
-        return inserted;
+        for (int i = 0; i < customers.length; i++) {
+            if (customers[i] == null) {
+                customers[i] = c;
+                return true;
+            }
+        }
+        return false; // ingen ledige plasser
     }
 
-    // e) remove customer with given id from reference table
+    // e) Slette kunde etter customer_id
     public Customer removeCustomer(int customer_id) {
-
-        boolean deleted = false;
-        Customer c = null;
-
-        // TODO
-
-        return c;
+        for (int i = 0; i < customers.length; i++) {
+            if (customers[i] != null && customers[i].getCustomer_id() == customer_id) {
+                Customer temp = customers[i];
+                customers[i] = null;
+                return temp;
+            }
+        }
+        return null; // kunde ikke finnes
     }
 
-    // f) return reference table with all customers
+    // f) Hente en tabell med alle kunder (ikke-null)
     public Customer[] getCustomers() {
-
-        Customer[] customers = null;
-
-        // TODO
-
-        return customers;
+        int count = countNonNull();
+        Customer[] activeCustomers = new Customer[count];
+        int index = 0;
+        for (Customer c : customers) {
+            if (c != null) {
+                activeCustomers[index++] = c;
+            }
+        }
+        return activeCustomers;
     }
 }
